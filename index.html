@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forge AI — AI Website Production Platform for Agencies</title>
+    <meta name="description" content="Turn client briefs into complete websites with AI. Generate, edit, recreate and prepare client websites faster with Forge AI.">
+    
+    <!-- SEO & Social Meta -->
+    <meta property="og:title" content="Forge AI — AI Website Production Platform for Agencies">
+    <meta property="og:description" content="Turn client briefs into complete websites with AI. Built for modern agencies.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Lucide-like SVG implementation) -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #0f172a;
+            --accent: #8b5cf6;
+            --bg-main: #ffffff;
+            --bg-subtle: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --container-max: 1200px;
+            --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-main);
+            background: var(--bg-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        button { cursor: pointer; border: none; font-family: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* Layout Helpers */
+        .container { max-width: var(--container-max); margin: 0 auto; padding: 0 2rem; }
+        .section-padding { padding: 6rem 0; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .grid { display: grid; }
+
+        /* Navigation */
+        .navbar {
+            height: 80px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-link { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
+        .nav-link:hover { color: var(--primary); }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .btn-secondary { background: var(--bg-subtle); color: var(--text-main); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: white; border-color: var(--text-muted); }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            background: radial-gradient(circle at top, #f0f4ff 0%, #ffffff 50%);
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 0.4rem 1rem;
+            background: #eef2ff;
+            color: var(--primary);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            max-width: 900px;
+            margin: 0 auto 1.5rem;
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 3rem;
+        }
+
+        .hero-ctas { display: flex; gap: 1rem; justify-content: center; }
+
+        /* Product Preview Component */
+        .product-showcase {
+            margin-top: 5rem;
+            position: relative;
+            background: #0f172a;
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+
+        .showcase-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .window-dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-r { background: #ff5f56; }
+        .dot-y { background: #ffbd2e; }
+        .dot-g { background: #27c93f; }
+
+        .showcase-ui {
+            display: grid;
+            grid-template-columns: 240px 1fr 280px;
+            height: 500px;
+            background: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .ui-sidebar { background: #0f172a; padding: 1.5rem; border-right: 1px solid rgba(255,255,255,0.05); }
+        .ui-canvas { background: #f1f5f9; position: relative; overflow-y: auto; }
+        .ui-properties { background: #0f172a; padding: 1.5rem; border-left: 1px solid rgba(255,255,255,0.05); }
+
+        .ui-mock-item { height: 10px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 1rem; }
+        .ui-mock-item.short { width: 60%; }
+        .ui-mock-item.accent { background: var(--primary); }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            background: white;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #eef2ff;
+            color: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 { margin-bottom: 1rem; font-size: 1.25rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Dashboard & App Styles */
+        #app-root { display: none; min-height: 100vh; background: var(--bg-subtle); }
+        .app-shell { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+        
+        .sidebar {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-nav { margin-top: 2rem; flex: 1; }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            color: #94a3b8;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-item.active { background: rgba(255,255,255,0.1); color: white; }
+        .sidebar-item:hover:not(.active) { color: white; background: rgba(255,255,255,0.05); }
+
+        .main-content { overflow-y: auto; padding: 2rem; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+
+        /* Project Cards */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .project-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .project-thumb { height: 180px; background: #f1f5f9; position: relative; border-bottom: 1px solid var(--border); }
+        .project-info { padding: 1.5rem; }
+        .project-status { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--primary); margin-bottom: 0.5rem; }
+
+        /* Generator Interface */
+        .generator-view { max-width: 800px; margin: 0 auto; background: white; padding: 3rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); ring: 2px solid #e0e7ff; }
+
+        /* Editor Styles */
+        .editor-shell { display: grid; grid-template-rows: 64px 1fr; height: 100vh; background: #f1f5f9; }
+        .editor-header { background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; }
+        .editor-main { display: grid; grid-template-columns: 280px 1fr 300px; height: calc(100vh - 64px); }
+        .editor-sidebar { background: white; border-right: 1px solid var(--border); overflow-y: auto; padding: 1.5rem; }
+        .editor-canvas-wrap { padding: 2rem; overflow-y: auto; display: flex; justify-content: center; }
+        .editor-canvas {
+            background: white;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 1000px;
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .editor-canvas.mobile { width: 375px; min-height: 667px; }
+        .editor-canvas.tablet { width: 768px; }
+
+        .editor-panel { background: white; border-left: 1px solid var(--border); overflow-y: auto; padding: 1.5rem; }
+
+        /* Copilot Modal */
+        .copilot-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 380px;
+            height: 500px;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            z-index: 2000;
+        }
+
+        .copilot-header { padding: 1rem; background: var(--primary); color: white; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; justify-content: space-between; }
+        .copilot-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+        .msg { padding: 0.75rem; border-radius: var(--radius-md); font-size: 0.9rem; max-width: 85%; }
+        .msg-ai { background: var(--bg-subtle); align-self: flex-start; }
+        .msg-user { background: var(--primary); color: white; align-self: flex-end; }
+        .copilot-input { padding: 1rem; border-top: 1px solid var(--border); display: flex; gap: 0.5rem; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .showcase-ui { grid-template-columns: 1fr; }
+            .ui-sidebar, .ui-properties { display: none; }
+            .app-shell { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .editor-main { grid-template-columns: 1fr; }
+            .editor-sidebar, .editor-panel { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero-ctas { flex-direction: column; }
+            .section-padding { padding: 4rem 0; }
+        }
+
+        /* Utilities */
+        .hidden { display: none !important; }
+        .loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Website Templates Visuals */
+        .site-preview-header { padding: 2rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .site-preview-hero { padding: 4rem 2rem; text-align: center; }
+        .site-preview-section { padding: 4rem 2rem; }
+        .site-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .site-card { height: 200px; background: #f8fafc; border-radius: 8px; }
+
+        /* Dynamic Industry Styles */
+        .theme-lumora { font-family: 'Georgia', serif; --p: #2d3436; }
+        .theme-nova { font-family: 'Inter', sans-serif; --p: #0984e3; }
+        .theme-apex { font-family: 'Outfit', sans-serif; --p: #d63031; }
+
+        .comparison-view { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem; background: #eee; height: 100%; }
+        .version-label { position: absolute; top: 1rem; left: 1rem; background: black; color: white; padding: 0.25rem 0.5rem; font-size: 0.7rem; border-radius: 4px; z-index: 10; }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 3000; }
+        .modal-content { background: white; padding: 2rem; border-radius: var(--radius-lg); width: 100%; max-width: 500px; }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay (Hidden by default) -->
+    <div id="loader" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p style="margin-top: 1rem; font-weight: 600; color: var(--primary);" id="loader-text">Forging your website...</p>
+    </div>
+
+    <!-- LANDING PAGE -->
+    <div id="landing-page">
+        <nav class="navbar">
+            <div class="container flex items-center justify-between">
+                <a href="#" class="logo">
+                    <div class="logo-icon">F</div>
+                    Forge AI
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#product" class="nav-link">Product</a></li>
+                    <li><a href="#solutions" class="nav-link">Solutions</a></li>
+                    <li><a href="#workflow" class="nav-link">Workflow</a></li>
+                    <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                </ul>
+                <div class="flex gap-4">
+                    <button class="btn btn-secondary" onclick="app.showDemo()">Interactive Demo</button>
+                    <button class="btn btn-primary" onclick="app.showDemo()">Request Agency Demo</button>
+                </div>
+            </div>
+        </nav>
+
+        <header class="hero">
+            <div class="container">
+                <span class="badge">Beta Access for Agencies</span>
+                <h1>Turn client briefs into complete websites with AI.</h1>
+                <p>Forge AI helps agencies generate, refine and prepare client websites faster while keeping creative control in the hands of their team.</p>
+                <div class="hero-ctas">
+                    <button class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;" onclick="app.showDemo()">Try Interactive Demo</button>
+                    <button class="btn btn-secondary" style="padding: 1rem 2.5rem; font-size: 1.1rem;" onclick="app.showDemo()">Request Agency Demo</button>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 0.9rem;">Built for modern web, creative and marketing agencies.</p>
+
+                <!-- Real Product Showcase -->
+                <div class="product-showcase">
+                    <div class="showcase-header">
+                        <div class="window-dots">
+                            <div class="dot dot-r"></div>
+                            <div class="dot dot-y"></div>
+                            <div class="dot dot-g"></div>
+                        </div>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; font-family: monospace;">forge-ai-workspace / luxury-interior-studio</div>
+                    </div>
+                    <div class="showcase-ui">
+                        <div class="ui-sidebar">
+                            <div class="ui-mock-item accent" style="height: 30px; margin-bottom: 2rem;"></div>
+                            <div class="ui-mock-item"></div>
+                            <div class="ui-mock-item short"></div>
+                            <div class="ui-mock-item"></div>
+                            <div class="ui-mock-item"></div>
+                            <div class="ui-mock-item short"></div>
+                        </div>
+                        <div class="ui-canvas">
+                            <div style="padding: 3rem; text-align: left;">
+                                <div style="width: 40px; height: 40px; background: #000; margin-bottom: 2rem;"></div>
+                                <h2 style="color: #0f172a; font-size: 3rem; margin-bottom: 1rem;">Elevating Modern Living</h2>
+                                <p style="color: #64748b; font-size: 1.2rem; max-width: 400px; margin-bottom: 2rem;">Bespoke interior design for high-end residential projects in Miami.</p>
+                                <div style="display: flex; gap: 1rem;">
+                                    <div style="width: 120px; height: 40px; background: #000;"></div>
+                                    <div style="width: 120px; height: 40px; border: 1px solid #000;"></div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 0 3rem;">
+                                <div style="height: 150px; background: #e2e8f0;"></div>
+                                <div style="height: 150px; background: #e2e8f0;"></div>
+                                <div style="height: 150px; background: #e2e8f0;"></div>
+                            </div>
+                        </div>
+                        <div class="ui-properties">
+                            <div style="color: white; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;">AI COPILOT</div>
+                            <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 8px; font-size: 0.75rem; color: #94a3b8; line-height: 1.4;">
+                                "I've analyzed the luxury interior design brief. I recommend using a high-contrast serif font and increasing the whitespace in the portfolio section to feel more premium."
+                            </div>
+                            <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                                <div style="padding: 0.5rem; background: var(--primary); color: white; border-radius: 4px; font-size: 0.7rem; text-align: center;">Apply Suggestions</div>
+                                <div style="padding: 0.5rem; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 4px; font-size: 0.7rem; text-align: center;">View Alternatives</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="product" class="section-padding">
+            <div class="container">
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">The production platform for high-performance agencies.</h2>
+                    <p style="color: var(--text-muted);">Stop starting from zero. Forge AI bridges the gap between client briefs and launch-ready websites.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Instant Generation</h3>
+                        <p>Turn a text brief into a full multi-page website with relevant copy, sections, and industry-specific layouts in seconds.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Creative Control</h3>
+                        <p>Unlike other AI tools, Forge gives you a full visual editor. Tweak every pixel, change fonts, and adjust layouts with ease.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Copilot</h3>
+                        <p>Stuck on a section? Ask the Copilot to improve the copy, suggest a better color palette, or optimize the mobile layout.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Version Comparison</h3>
+                        <p>Generate multiple design directions from one brief. Compare them side-by-side and let your client choose the winner.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Client Collaboration</h3>
+                        <p>Send a secure preview link to your clients. They can leave feedback directly on the design for your team to resolve.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏢</div>
+                        <h3>White-Label</h3>
+                        <p>Present Forge as your own internal agency tool. Custom branding, domain, and client-facing interfaces.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer style="background: var(--bg-subtle); padding: 4rem 0; border-top: 1px solid var(--border);">
+            <div class="container">
+                <div class="flex justify-between items-center">
+                    <div class="logo">
+                        <div class="logo-icon">F</div>
+                        Forge AI
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        © 2024 Forge AI. Built for Agencies.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- APP / DASHBOARD ROOT -->
+    <div id="app-root">
+        <div class="app-shell">
+            <aside class="sidebar">
+                <div class="logo" style="color: white; margin-bottom: 2rem;">
+                    <div class="logo-icon">F</div>
+                    Forge AI
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="sidebar-item active" onclick="app.navigate('dashboard')">Dashboard</a>
+                    <a href="#" class="sidebar-item" onclick="app.navigate('projects')">Projects</a>
+                    <a href="#" class="sidebar-item" onclick="app.navigate('templates')">Templates</a>
+                    <a href="#" class="sidebar-item" onclick="app.navigate('clients')">Clients</a>
+                    <div style="margin: 1.5rem 0 0.5rem; font-size: 0.7rem; color: #475569; font-weight: 700; text-transform: uppercase;">Organization</div>
+                    <a href="#" class="sidebar-item" onclick="app.navigate('white-label')">White Label</a>
+                    <a href="#" class="sidebar-item" onclick="app.navigate('api')">API & Docs</a>
+                    <a href="#" class="sidebar-item" onclick="app.navigate('settings')">Settings</a>
+                </nav>
+                <div style="padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                    <button class="btn btn-secondary" style="width: 100%; background: transparent; color: white; border-color: rgba(255,255,255,0.2);" onclick="app.resetDemo()">Reset Demo</button>
+                </div>
+            </aside>
+
+            <main class="main-content" id="main-view">
+                <!-- Dynamic Content Loads Here -->
+            </main>
+        </div>
+    </div>
+
+    <!-- EDITOR VIEW (Separate Layout) -->
+    <div id="editor-view" class="hidden">
+        <div class="editor-shell">
+            <header class="editor-header">
+                <div class="flex items-center gap-4">
+                    <button onclick="app.navigate('projects')" style="background: none; border: none; font-size: 1.2rem;">←</button>
+                    <div id="editor-project-name" style="font-weight: 700; font-family: 'Outfit';">Project Name</div>
+                    <div id="editor-save-status" style="font-size: 0.75rem; color: var(--text-muted);">Saved just now</div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="btn btn-secondary" onclick="app.toggleDevice('desktop')">Desktop</button>
+                    <button class="btn btn-secondary" onclick="app.toggleDevice('tablet')">Tablet</button>
+                    <button class="btn btn-secondary" onclick="app.toggleDevice('mobile')">Mobile</button>
+                    <div style="width: 1px; height: 24px; background: var(--border); margin: 0 0.5rem;"></div>
+                    <button class="btn btn-secondary" onclick="app.showVersions()">Versions</button>
+                    <button class="btn btn-primary" onclick="app.showClientPreview()">Client Preview</button>
+                </div>
+            </header>
+            <div class="editor-main">
+                <aside class="editor-sidebar">
+                    <h4 style="margin-bottom: 1rem;">Pages</h4>
+                    <div id="editor-pages-list"></div>
+                    <h4 style="margin: 2rem 0 1rem;">Sections</h4>
+                    <div id="editor-sections-list"></div>
+                </aside>
+                <section class="editor-canvas-wrap" id="canvas-container">
+                    <div class="editor-canvas" id="website-canvas">
+                        <!-- Website Content Injected Here -->
+                    </div>
+                </section>
+                <aside class="editor-panel">
+                    <h4 style="margin-bottom: 1.5rem;">Properties</h4>
+                    <div id="editor-properties">
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Select an element to edit</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copilot Widget -->
+    <div id="copilot-widget" class="copilot-panel hidden">
+        <div class="copilot-header">
+            <div class="flex items-center gap-2">
+                <span style="font-weight: 700;">Forge Copilot</span>
+            </div>
+            <button onclick="app.toggleCopilot()" style="background: none; border: none; color: white;">✕</button>
+        </div>
+        <div class="copilot-messages" id="copilot-messages">
+            <div class="msg msg-ai">I'm analyzing your website structure. How can I help you improve it today?</div>
+        </div>
+        <div class="copilot-input">
+            <input type="text" id="copilot-input-field" class="form-control" placeholder="Ask Copilot...">
+            <button class="btn btn-primary" onclick="app.askCopilot()">Send</button>
+        </div>
+    </div>
+
+    <!-- Client Preview Mode -->
+    <div id="client-preview" class="hidden" style="position: fixed; inset: 0; background: white; z-index: 5000; overflow-y: auto;">
+        <div style="position: sticky; top: 0; background: white; border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 10;">
+            <div class="logo">Forge AI <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">Client Preview</span></div>
+            <div class="flex gap-2">
+                <button class="btn btn-secondary" onclick="app.openFeedback()">Request Changes</button>
+                <button class="btn btn-primary" onclick="app.approveProject()">Approve Website</button>
+                <button class="btn btn-secondary" onclick="app.closeClientPreview()">Exit</button>
+            </div>
+        </div>
+        <div id="client-canvas"></div>
+    </div>
+
+    <script>
+        /**
+         * FORGE AI - Core Application Logic
+         */
+        
+        const app = {
+            state: {
+                view: 'landing', // landing, dashboard, projects, generator, editor, templates, clients, api, settings
+                projects: [],
+                currentProject: null,
+                currentVersion: 1,
+                device: 'desktop',
+                isCopilotOpen: false,
+                isDemo: true
+            },
+
+            init() {
+                this.loadState();
+                this.render();
+                
+                // Handle Routing for GitHub Pages
+                window.onpopstate = () => {
+                    const path = window.location.hash.replace('#', '') || 'landing';
+                    this.navigate(path);
+                };
+            },
+
+            loadState() {
+                const saved = localStorage.getItem('forge_ai_state');
+                if (saved) {
+                    this.state = JSON.parse(saved);
+                } else {
+                    this.state.projects = [
+                        {
+                            id: 'lumora',
+                            name: 'Lumora Interiors',
+                            type: 'Interior Design',
+                            industry: 'luxury',
+                            description: 'High-end interior design studio in Miami.',
+                            status: 'In Review',
+                            versions: [this.generateWebsiteData('Lumora Interiors', 'luxury')],
+                            currentVersionIndex: 0
+                        },
+                        {
+                            id: 'nova',
+                            name: 'Nova Dental',
+                            type: 'Medical',
+                            industry: 'dental',
+                            description: 'Modern dental clinic focused on patient comfort.',
+                            status: 'Draft',
+                            versions: [this.generateWebsiteData('Nova Dental', 'dental')],
+                            currentVersionIndex: 0
+                        },
+                        {
+                            id: 'apex',
+                            name: 'Apex Fitness',
+                            type: 'Fitness',
+                            industry: 'fitness',
+                            description: 'Premium strength and conditioning facility.',
+                            status: 'Approved',
+                            versions: [this.generateWebsiteData('Apex Fitness', 'fitness')],
+                            currentVersionIndex: 0
+                        }
+                    ];
+                    this.saveState();
+                }
+            },
+
+            saveState() {
+                localStorage.setItem('forge_ai_state', JSON.stringify(this.state));
+            },
+
+            resetDemo() {
+                localStorage.removeItem('forge_ai_state');
+                window.location.reload();
+            },
+
+            navigate(view, id = null) {
+                this.state.view = view;
+                if (id) {
+                    this.state.currentProject = this.state.projects.find(p => p.id === id);
+                }
+                this.saveState();
+                this.render();
+                window.scrollTo(0, 0);
+            },
+
+            showDemo() {
+                this.navigate('dashboard');
+            },
+
+            render() {
+                const landing = document.getElementById('landing-page');
+                const appRoot = document.getElementById('app-root');
+                const editor = document.getElementById('editor-view');
+                const mainView = document.getElementById('main-view');
+
+                // Hide all top-level views
+                landing.classList.add('hidden');
+                appRoot.classList.add('hidden');
+                editor.classList.add('hidden');
+
+                if (this.state.view === 'landing') {
+                    landing.classList.remove('hidden');
+                } else if (this.state.view === 'editor') {
+                    editor.classList.remove('hidden');
+                    this.renderEditor();
+                } else {
+                    appRoot.classList.remove('hidden');
+                    this.renderMainView();
+                }
+
+                // Update Sidebar Actives
+                document.querySelectorAll('.sidebar-item').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.innerText.toLowerCase() === this.state.view) {
+                        item.classList.add('active');
+                    }
+                });
+            },
+
+            renderMainView() {
+                const main = document.getElementById('main-view');
+                
+                switch(this.state.view) {
+                    case 'dashboard':
+                        main.innerHTML = `
+                            <div class="app-header">
+                                <h1>Dashboard</h1>
+                                <button class="btn btn-primary" onclick="app.navigate('generator')">+ New Project</button>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                                <div>
+                                    <h3 style="margin-bottom: 1rem;">Recent Projects</h3>
+                                    <div class="project-grid">
+                                        ${this.state.projects.map(p => this.createProjectCard(p)).join('')}
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 style="margin-bottom: 1rem;">Activity</h3>
+                                    <div style="background: white; padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+                                        <div style="font-size: 0.85rem; color: var(--text-muted);">DEMO DATA</div>
+                                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                                            <div class="flex gap-4">
+                                                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--primary); margin-top: 0.4rem;"></div>
+                                                <div>
+                                                    <p style="font-size: 0.9rem; font-weight: 600;">Website Generated</p>
+                                                    <p style="font-size: 0.8rem; color: var(--text-muted);">Lumora Interiors V2</p>
+                                                </div>
+                                            </div>
+                                            <div class="flex gap-4">
+                                                <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; margin-top: 0.4rem;"></div>
+                                                <div>
+                                                    <p style="font-size: 0.9rem; font-weight: 600;">Client Approved</p>
+                                                    <p style="font-size: 0.8rem; color: var(--text-muted);">Apex Fitness</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                    
+                    case 'projects':
+                        main.innerHTML = `
+                            <div class="app-header">
+                                <h1>Projects</h1>
+                                <button class="btn btn-primary" onclick="app.navigate('generator')">+ New Project</button>
+                            </div>
+                            <div class="project-grid">
+                                ${this.state.projects.map(p => this.createProjectCard(p)).join('')}
+                            </div>
+                        `;
+                        break;
+
+                    case 'generator':
+                        main.innerHTML = `
+                            <div class="app-header">
+                                <h1>AI Website Generator</h1>
+                            </div>
+                            <div class="generator-view">
+                                <div class="form-group">
+                                    <label>Client Brief / Description</label>
+                                    <textarea id="gen-brief" class="form-control" rows="4" placeholder="e.g. Create a premium website for a luxury interior design studio in Miami targeting high-income homeowners."></textarea>
+                                </div>
+                                <div id="gen-analysis" class="hidden" style="background: var(--bg-subtle); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+                                    <h4 style="margin-bottom: 1rem;">AI Brief Analysis</h4>
+                                    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                        <div>
+                                            <label style="font-size: 0.7rem; color: var(--text-muted);">PROPOSED NAME</label>
+                                            <div id="ana-name" style="font-weight: 700;"></div>
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.7rem; color: var(--text-muted);">INDUSTRY TYPE</label>
+                                            <div id="ana-type" style="font-weight: 700;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="btn btn-secondary" onclick="app.analyzeBrief()">Analyze Brief</button>
+                                    <button id="btn-generate" class="btn btn-primary hidden" onclick="app.generateProject()">Generate Website</button>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'api':
+                        main.innerHTML = `
+                            <div class="app-header">
+                                <h1>API & Documentation</h1>
+                            </div>
+                            <div style="background: white; padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+                                <span class="badge">API PREVIEW</span>
+                                <h3 style="margin: 1rem 0;">Integrate Forge AI into your Agency Workflow</h3>
+                                <p style="color: var(--text-muted); margin-bottom: 2rem;">Use our robust API to trigger website generation from your own CRM or project management tools.</p>
+                                
+                                <div style="background: #0f172a; color: #a5b4fc; padding: 1.5rem; border-radius: 8px; font-family: monospace; font-size: 0.9rem;">
+                                    <span style="color: #4ade80;">POST</span> /api/v1/websites/generate<br>
+                                    {<br>
+                                    &nbsp;&nbsp;"brief": "Luxury dental clinic in London",<br>
+                                    &nbsp;&nbsp;"style": "modern-minimal",<br>
+                                    &nbsp;&nbsp;"pages": ["home", "services", "contact"]<br>
+                                    }
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'white-label':
+                        main.innerHTML = `
+                            <div class="app-header">
+                                <h1>White Label Settings</h1>
+                            </div>
+                            <div style="max-width: 600px; background: white; padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+                                <div class="form-group">
+                                    <label>Agency Name</label>
+                                    <input type="text" class="form-control" value="My Creative Agency">
+                                </div>
+                                <div class="form-group">
+                                    <label>Brand Primary Color</label>
+                                    <div class="flex gap-2">
+                                        <input type="color" value="#6366f1" style="height: 40px; width: 60px;">
+                                        <input type="text" class="form-control" value="#6366f1">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Custom Favicon</label>
+                                    <button class="btn btn-secondary">Upload Icon</button>
+                                </div>
+                                <button class="btn btn-primary">Save Settings</button>
+                            </div>
+                        `;
+                        break;
+
+                    default:
+                        main.innerHTML = `<h1>${this.state.view}</h1><p>This module is part of the Forge AI Agency Suite.</p>`;
+                }
+            },
+
+            createProjectCard(p) {
+                return `
+                    <div class="project-card">
+                        <div class="project-thumb">
+                            <div style="padding: 1rem; font-family: ${p.industry === 'luxury' ? 'serif' : 'sans-serif'};">
+                                <div style="font-weight: 800; font-size: 0.8rem;">${p.name}</div>
+                                <div style="height: 4px; width: 20px; background: var(--primary); margin: 0.5rem 0;"></div>
+                                <div style="font-size: 0.5rem; color: #64748b;">${p.description.substring(0, 40)}...</div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-status">${p.status}</div>
+                            <h4 style="margin-bottom: 0.5rem;">${p.name}</h4>
+                            <div class="flex justify-between items-center">
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">${p.type}</span>
+                                <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="app.navigate('editor', '${p.id}')">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            analyzeBrief() {
+                const brief = document.getElementById('gen-brief').value;
+                if (!brief) return alert('Please enter a brief.');
+
+                const loader = document.getElementById('loader');
+                loader.classList.remove('hidden');
+                document.getElementById('loader-text').innerText = "Analyzing Brief...";
+
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    const analysis = document.getElementById('gen-analysis');
+                    analysis.classList.remove('hidden');
+                    
+                    // Simple logic to "guess" details
+                    let name = "New Project";
+                    let type = "Business";
+                    
+                    if (brief.toLowerCase().includes('interior')) { name = "Aura Interiors"; type = "Interior Design"; }
+                    else if (brief.toLowerCase().includes('dental')) { name = "Smile Studio"; type = "Medical"; }
+                    else if (brief.toLowerCase().includes('fitness')) { name = "Core Strength"; type = "Fitness"; }
+                    else { name = "Forge Venture"; type = "SaaS"; }
+
+                    document.getElementById('ana-name').innerText = name;
+                    document.getElementById('ana-type').innerText = type;
+                    document.getElementById('btn-generate').classList.remove('hidden');
+                }, 1500);
+            },
+
+            generateProject() {
+                const loader = document.getElementById('loader');
+                loader.classList.remove('hidden');
+                document.getElementById('loader-text').innerText = "Generating Website Architecture...";
+
+                setTimeout(() => {
+                    const name = document.getElementById('ana-name').innerText;
+                    const type = document.getElementById('ana-type').innerText;
+                    const id = name.toLowerCase().replace(/\s/g, '-');
+                    
+                    const newProject = {
+                        id: id,
+                        name: name,
+                        type: type,
+                        industry: type.toLowerCase(),
+                        description: document.getElementById('gen-brief').value,
+                        status: 'Draft',
+                        versions: [this.generateWebsiteData(name, type.toLowerCase())],
+                        currentVersionIndex: 0
+                    };
+
+                    this.state.projects.unshift(newProject);
+                    this.state.currentProject = newProject;
+                    this.saveState();
+                    
+                    loader.classList.add('hidden');
+                    this.navigate('editor', id);
+                }, 3000);
+            },
+
+            generateWebsiteData(name, industry) {
+                return {
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    theme: industry,
+                    config: {
+                        primaryColor: industry === 'luxury' ? '#1a1a1a' : industry === 'dental' ? '#0984e3' : '#d63031',
+                        font: industry === 'luxury' ? 'Georgia' : 'Inter'
+                    },
+                    pages: [
+                        {
+                            name: 'Home',
+                            sections: [
+                                { type: 'navbar', content: { logo: name } },
+                                { type: 'hero', content: { title: `Premium ${name}`, subtitle: `The leading ${industry} solutions for your needs.`, cta: 'Get Started' } },
+                                { type: 'features', content: { title: 'Our Services', items: ['Expert Consultation', 'Quality Results', '24/7 Support'] } },
+                                { type: 'footer', content: { text: `© 2024 ${name}. All rights reserved.` } }
+                            ]
+                        }
+                    ]
+                };
+            },
+
+            renderEditor() {
+                const project = this.state.currentProject;
+                if (!project) return;
+
+                document.getElementById('editor-project-name').innerText = project.name;
+                
+                const pagesList = document.getElementById('editor-pages-list');
+                const site = project.versions[project.currentVersionIndex];
+                
+                pagesList.innerHTML = site.pages.map(p => `
+                    <div class="sidebar-item active" style="background: var(--bg-subtle); color: var(--text-main); cursor: pointer;">
+                        📄 ${p.name}
+                    </div>
+                `).join('');
+
+                const sectionsList = document.getElementById('editor-sections-list');
+                sectionsList.innerHTML = site.pages[0].sections.map((s, idx) => `
+                    <div class="sidebar-item" style="font-size: 0.8rem; border: 1px solid var(--border); margin-bottom: 0.5rem; cursor: move;">
+                        ⣿ ${s.type.toUpperCase()}
+                    </div>
+                `).join('');
+
+                this.renderCanvas();
+            },
+
+            renderCanvas() {
+                const canvas = document.getElementById('website-canvas');
+                const project = this.state.currentProject;
+                const site = project.versions[project.currentVersionIndex];
+                const themeClass = `theme-${site.theme}`;
+                
+                canvas.className = `editor-canvas ${this.state.device} ${themeClass}`;
+                
+                const homePage = site.pages[0];
+                canvas.innerHTML = homePage.sections.map(s => this.renderSection(s, site.config)).join('');
+
+                // Make elements editable
+                canvas.querySelectorAll('[data-editable]').forEach(el => {
+                    el.contentEditable = true;
+                    el.addEventListener('blur', (e) => {
+                        this.updateContent(el.dataset.path, el.innerText);
+                    });
+                });
+            },
+
+            renderSection(section, config) {
+                const style = `style="color: ${config.primaryColor}"`;
+                
+                switch(section.type) {
+                    case 'navbar':
+                        return `
+                            <div class="site-preview-header">
+                                <div style="font-weight: 800; font-size: 1.2rem;" data-editable="true" data-path="pages.0.sections.0.content.logo">${section.content.logo}</div>
+                                <div class="flex gap-4" style="font-size: 0.8rem; font-weight: 600;">
+                                    <span>Services</span><span>About</span><span>Contact</span>
+                                </div>
+                            </div>
+                        `;
+                    case 'hero':
+                        return `
+                            <div class="site-preview-hero">
+                                <h1 style="font-size: 3rem; margin-bottom: 1rem;" data-editable="true" data-path="pages.0.sections.1.content.title">${section.content.title}</h1>
+                                <p style="color: #64748b; font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem;" data-editable="true" data-path="pages.0.sections.1.content.subtitle">${section.content.subtitle}</p>
+                                <button class="btn btn-primary" style="background: ${config.primaryColor}">${section.content.cta}</button>
+                            </div>
+                        `;
+                    case 'features':
+                        return `
+                            <div class="site-preview-section">
+                                <h2 style="text-align: center; margin-bottom: 3rem;">${section.content.title}</h2>
+                                <div class="site-grid">
+                                    ${section.content.items.map(item => `<div class="site-card flex items-center justify-center" style="padding: 2rem; font-weight: 600;">${item}</div>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    case 'footer':
+                        return `
+                            <div style="padding: 2rem; text-align: center; border-top: 1px solid #eee; font-size: 0.8rem; color: #94a3b8;">
+                                ${section.content.text}
+                            </div>
+                        `;
+                    default: return '';
+                }
+            },
+
+            updateContent(path, value) {
+                // Simple path resolver (e.g., "pages.0.sections.1.content.title")
+                const parts = path.split('.');
+                let obj = this.state.currentProject.versions[this.state.currentProject.currentVersionIndex];
+                for (let i = 0; i < parts.length - 1; i++) {
+                    obj = obj[parts[i]];
+                }
+                obj[parts[parts.length - 1]] = value;
+                this.saveState();
+                document.getElementById('editor-save-status').innerText = "Saved just now";
+            },
+
+            toggleDevice(dev) {
+                this.state.device = dev;
+                this.renderCanvas();
+            },
+
+            toggleCopilot() {
+                const widget = document.getElementById('copilot-widget');
+                widget.classList.toggle('hidden');
+            },
+
+            askCopilot() {
+                const input = document.getElementById('copilot-input-field');
+                const text = input.value;
+                if (!text) return;
+
+                const msgContainer = document.getElementById('copilot-messages');
+                msgContainer.innerHTML += `<div class="msg msg-user">${text}</div>`;
+                input.value = '';
+
+                setTimeout(() => {
+                    let response = "I've analyzed your request. I suggest making the header sticky and using a more bold weight for the hero title to increase impact.";
+                    if (text.toLowerCase().includes('premium')) {
+                        response = "To make this feel more premium, I recommend increasing the letter spacing on headings and using a softer background color like #F8FAFC.";
+                    }
+                    msgContainer.innerHTML += `<div class="msg msg-ai">${response}</div>`;
+                    msgContainer.scrollTop = msgContainer.scrollHeight;
+                }, 1000);
+            },
+
+            showVersions() {
+                const project = this.state.currentProject;
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>Version History</h3>
+                        <div style="margin: 1.5rem 0;">
+                            ${project.versions.map((v, i) => `
+                                <div class="flex justify-between items-center" style="padding: 1rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.5rem;">
+                                    <div>
+                                        <div style="font-weight: 700;">Version ${i + 1}</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">${new Date(v.timestamp).toLocaleString()}</div>
+                                    </div>
+                                    <button class="btn btn-secondary" onclick="app.loadVersion(${i}); this.parentElement.parentElement.parentElement.remove();">Restore</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="app.recreateVersion()">Generate New Direction</button>
+                        <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="this.parentElement.parentElement.remove()">Close</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            },
+
+            recreateVersion() {
+                const loader = document.getElementById('loader');
+                loader.classList.remove('hidden');
+                document.getElementById('loader-text').innerText = "Generating New Creative Direction...";
+
+                setTimeout(() => {
+                    const project = this.state.currentProject;
+                    const newVersion = JSON.parse(JSON.stringify(project.versions[0]));
+                    newVersion.timestamp = new Date().toISOString();
+                    newVersion.config.primaryColor = '#8b5cf6'; // Different color for V2
+                    
+                    project.versions.push(newVersion);
+                    project.currentVersionIndex = project.versions.length - 1;
+                    this.saveState();
+                    
+                    loader.classList.add('hidden');
+                    document.querySelector('.modal-overlay')?.remove();
+                    this.renderEditor();
+                }, 2000);
+            },
+
+            loadVersion(index) {
+                this.state.currentProject.currentVersionIndex = index;
+                this.saveState();
+                this.renderEditor();
+            },
+
+            showClientPreview() {
+                const preview = document.getElementById('client-preview');
+                const canvas = document.getElementById('client-canvas');
+                const project = this.state.currentProject;
+                const site = project.versions[project.currentVersionIndex];
+                
+                preview.classList.remove('hidden');
+                canvas.innerHTML = site.pages[0].sections.map(s => this.renderSection(s, site.config)).join('');
+                // Disable editing in preview
+                canvas.querySelectorAll('[data-editable]').forEach(el => el.contentEditable = false);
+            },
+
+            closeClientPreview() {
+                document.getElementById('client-preview').classList.add('hidden');
+            },
+
+            openFeedback() {
+                const feedback = prompt("Please enter your feedback for the agency:");
+                if (feedback) {
+                    alert("Feedback sent to the Forge AI Dashboard.");
+                }
+            },
+
+            approveProject() {
+                alert("Website Approved! Preparing for final deployment...");
+                this.state.currentProject.status = "Approved";
+                this.saveState();
+                this.closeClientPreview();
+                this.navigate('dashboard');
+            }
+        };
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
+</html>
